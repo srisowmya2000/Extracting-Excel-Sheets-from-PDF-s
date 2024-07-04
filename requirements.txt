@@ -1,0 +1,5 @@
+#Windows: Download and install pdftk from pdflabs.com.
+#Mac:
+#!brew install pdftk-java
+#Linux:
+#sudo apt-get install pdftk
