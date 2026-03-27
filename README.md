@@ -1,35 +1,60 @@
-Excel Extraction from Reports
+# Extract CSV Files from PDF Reports
 
-Introduction:
-The code has been developed for CSV file extraction from the pdf report.  This is created using Python code which extracts CSV files to the output directory When the directory of the pdf is given. 
+A Python utility to extract embedded CSV files from PDF reports in bulk.
 
-Requirements: 
-Python IDE:  Vscode, Jupiter notebook, PyCharm.
-Pdftk Installation supports – Windows, Mac, Linux. 
+This project scans a folder of PDF reports, unpacks file attachments from each PDF using `pdftk`, and saves all extracted `.csv` files into an output directory with cleaned, prefixed filenames.
 
-Libraries 
+## Why this project is useful
 
-Import os -- Provides a portable way to interact with the operating system from Python.
-Import subprocess – Allows you to spawn new processes (programs), connect to their input/output/error pipes, and capture their return codes.
-Import shutil -- provides high-level functions for working with files and directories, often simplifying common tasks.
+Many enterprise and reporting workflows generate PDF files that contain embedded CSV attachments. Manually opening each report and exporting attachments is slow and repetitive.
 
-Features used from Lib:
-os.makedirs(output_directory, exist_ok=True) –  Create new directory if doesn’t exist. If it exists it doesn’t create. 
-os.walk(pdf_directory) -- Iterates through all files and subdirectories within the provided directory. 
-os.path.join(output_directory, 'temp') -- Combines (joins) path components to create a full path.
-subprocess.run -- This line executes the pdftk command with specific arguments to unpack attachments from a PDF.
-Root: The path to the current directory being processed.
-files: A list of filenames within the current directory.
+This script automates that process by:
 
-Steps to execute:  
-Open one of your Python IDE. 
-Open the code in python. 
-Edit the path where the pdf is present and then give the output path. 
-Execute the python code
+- scanning a directory for PDF files
+- extracting embedded attachments from each PDF
+- filtering for CSV files only
+- renaming the extracted CSVs using the source PDF filename
+- saving everything into one output folder
 
+## Features
 
-Reference: 
-https://docs.python.org/3/library/os.html
-https://docs.python.org/3/library/shutil.html
-https://python.readthedocs.io/en/latest/library/subprocess.html?highlight=re 
+- Bulk processing of PDF files
+- Extracts embedded file attachments from PDFs
+- Saves only CSV attachments
+- Automatically renames output files to keep them organized
+- Works well for report-processing and automation workflows
 
+## How it works
+
+The script:
+
+1. Walks through a directory of PDF files
+2. Uses `pdftk` to unpack embedded files from each PDF
+3. Checks the extracted files for `.csv` attachments
+4. Renames each CSV using the original PDF filename as a prefix
+5. Moves the final files into the output directory
+
+## Example
+
+If the input folder contains:
+
+- `report_january.pdf`
+- `report_february.pdf`
+
+and those PDFs contain embedded CSV files such as:
+
+- `data.csv`
+- `summary.csv`
+
+the output may look like:
+
+- `report_january_data.csv`
+- `report_february_summary.csv`
+
+## Project structure
+
+```bash
+.
+├── extractcsv.py
+├── requirements.txt
+└── README.md
